@@ -17,8 +17,22 @@ if (empty($_POST['user_id'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['survey_id'])) {
+    $response['success'] = false;
+    $response['message'] = "Survey ID is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+if (empty($_POST['user_option'])) {
+    $response['success'] = false;
+    $response['message'] = "User Option is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 
 $user_id = $db->escapeString($_POST['user_id']);
+$survey_id = $db->escapeString($_POST['survey_id']);
+$user_option = $db->escapeString($_POST['user_option']);
 
 $sql = "SELECT * FROM users WHERE id = $user_id ";
 $db->sql($sql);
@@ -31,30 +45,22 @@ if (empty($user)) {
     return false;
 }
 
-
-$sql = "SELECT * FROM plan";
+$sql = "SELECT * FROM survey WHERE id = $survey_id ";
 $db->sql($sql);
-$res= $db->getResult();
-$num = $db->numRows($res);
+$user = $db->getResult();
 
-if ($num >= 1){
-    foreach ($res as $row) {
-        $temp['id'] = $row['id'];
-        $temp['name'] = $row['name'];
-        $temp['description'] = $row['description'];
-        $temp['image'] = DOMAIN_URL . $row['image'];
-        $rows[] = $temp;
-    }
-    $response['success'] = true;
-    $response['message'] = "Plan Details Listed Successfully";
-    $response['data'] = $rows;
-    print_r(json_encode($response));
-}
-else{
+if (empty($user)) {
     $response['success'] = false;
-    $response['message'] = "plan Not found";
+    $response['message'] = "Survey not found";
     print_r(json_encode($response));
-
+    return false;
 }
 
+    $sql = "INSERT INTO user_survey (`user_id`, `survey_id`, `user_option`) VALUES ('$user_id', '$survey_id', '$user_option')";
+    $db->sql($sql);
 
+    $response['success'] = true;
+    $response['message'] = "Survey Inserted Successfully";
+    print_r(json_encode($response));
+
+?>

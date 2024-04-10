@@ -168,7 +168,7 @@ $db->connect();
         
             if (isset($_GET['search']) && !empty($_GET['search'])) {
                 $search = $db->escapeString($_GET['search']);
-                $where .= "WHERE id like '%" . $search . "%' OR products like '%" . $search . "%'";
+                $where .= "WHERE id like '%" . $search . "%' OR name like '%" . $search . "%'";
             }
             if (isset($_GET['sort'])){
                 $sort = $db->escapeString($_GET['sort']);
@@ -198,22 +198,15 @@ $db->connect();
                 $operate = ' <a href="edit-plan.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
                 $operate .= ' <a class="text text-danger" href="delete-plan.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
                 $tempRow['id'] = $row['id'];
-                $tempRow['products'] = $row['products'];
-                $tempRow['price'] = $row['price'];
-                $tempRow['daily_income'] = $row['daily_income'];
-                $tempRow['daily_quantity'] = $row['daily_quantity'];
-                $tempRow['monthly_income'] = $row['monthly_income'];
-                $tempRow['invite_bonus'] = $row['invite_bonus'];
-                $tempRow['unit'] = $row['unit'];
-                if (!empty($row['image'])) {
+                $tempRow['name'] = $row['name'];
+                $tempRow['description'] = $row['description'];
+                if(!empty($row['image'])){
                     $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['image'] . "'><img src='" . $row['image'] . "' title='" . $row['image'] . "' height='50' /></a>";
-                } else {
+        
+                }else{
                     $tempRow['image'] = 'No Image';
+        
                 }
-                if($row['stock']==1)
-                $tempRow['stock'] ="<p class='text text-success'>Enabled</p>";
-                else
-              $tempRow['stock']="<p class='text text-danger'>Disabled</p>";
                 $tempRow['operate'] = $operate;
                 $rows[] = $tempRow;
             }
@@ -1052,5 +1045,74 @@ if (isset($_GET['table']) && $_GET['table'] == 'recharge_trans') {
     $bulkData['rows'] = $rows;
     print_r(json_encode($bulkData));
 }
+
+//Survey
+if (isset($_GET['table']) && $_GET['table'] == 'survey') {
+
+    $offset = 0;
+    $limit = 10;
+    $where = '';
+    $sort = 'id';
+    $order = 'DESC';
+
+    if (isset($_GET['products']) && $_GET['products'] != '') {
+        $products = $db->escapeString($fn->xss_clean($_GET['products']));
+        $where .= " AND p.products = '$products'";
+    }
+    if ((isset($_GET['joined_date']) && $_GET['joined_date'] != '')) {
+        $joined_date = $db->escapeString($fn->xss_clean($_GET['joined_date']));
+        $where .= " AND l.joined_date = '$joined_date'";
+    }
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($_GET['offset']);
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($_GET['limit']);
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($_GET['sort']);
+    if (isset($_GET['order']))
+        $order = $db->escapeString($_GET['order']);
+
+        if (isset($_GET['search']) && !empty($_GET['search'])) {
+            $search = $db->escapeString($_GET['search']);
+            $where .= " AND (u.id LIKE '%" . $search . "%' OR u.name LIKE '%" . $search . "%' OR p.name LIKE '%" . $search . "%'  OR u.mobile LIKE '%" . $search . "%')";
+        }
+       
+        $join = "LEFT JOIN `plan` p ON l.plan_id = p.id WHERE l.id IS NOT NULL " . $where;
+
+        $sql = "SELECT COUNT(l.id) AS total FROM `survey` l " . $join;
+        $db->sql($sql);
+        $res = $db->getResult();
+        foreach ($res as $row)
+            $total = $row['total'];
+       
+         $sql = "SELECT l.id AS id,l.*,p.name FROM `survey` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
+         $db->sql($sql);
+         $res = $db->getResult();
+        
+
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    $rows = array();
+    $tempRow = array();
+    foreach ($res as $row) {
+
+
+        
+        $operate = ' <a href="edit-survey.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
+        $operate .= ' <a class="text text-danger" href="delete-survey.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
+        $tempRow['id'] = $row['id'];
+        $tempRow['name'] = $row['name'];
+        $tempRow['question'] = $row['question'];
+        $tempRow['correct_option'] = $row['correct_option'];
+        $tempRow['option_1'] = $row['option_1'];
+        $tempRow['option_2'] = $row['option_2'];
+        $tempRow['option_3'] = $row['option_3'];
+        $tempRow['operate'] = $operate;
+        $rows[] = $tempRow;
+    }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
+
 $db->disconnect();
 

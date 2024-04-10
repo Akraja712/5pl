@@ -269,6 +269,12 @@ if ($_SESSION['role'] == 'admin') {
                         <span>Recharge Trans</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="survey.php">
+                    <i class="fas fa-money"></i>
+                        <span>Survey</span>
+                    </a>
+                </li>
                 <?php } ?>
             </section>
             <!-- /.sidebar -->
