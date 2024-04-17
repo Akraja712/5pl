@@ -8,18 +8,22 @@ $fn = new custom_functions;
 if (isset($_POST['btnAdd'])) {
 
         $url = $db->escapeString(($_POST['url']));
+        $duration = $db->escapeString(($_POST['duration']));
         $error = array();
        
         if (empty($url)) {
             $error['url'] = " <span class='label label-danger'>Required!</span>";
         }
+        if (empty($duration)) {
+            $error['duration'] = " <span class='label label-danger'>Required!</span>";
+        }
 
        
        
-       if (!empty($url)) 
+       if (!empty($url) && !empty($duration)) 
        {
            
-            $sql_query = "INSERT INTO video (url)VALUES('$url')";
+            $sql_query = "INSERT INTO video (url,duration)VALUES('$url','$duration')";
             $db->sql($sql_query);
             $result = $db->getResult();
             if (!empty($result)) {
@@ -66,6 +70,10 @@ if (isset($_POST['btnAdd'])) {
                                     <label for="exampleInputtitle">URL</label> <i class="text-danger asterik">*</i>
                                     <input type="text" class="form-control" name="url" required>
                                 </div>
+                                <div class='col-md-6'>
+                                  <label for="exampleInputtitle">Duration</label> <i class="text-danger asterisk">*</i>
+                                  <input type="text" class="form-control" name="duration" id="duration" placeholder="MM:SS" title="Please enter duration in MM:SS format" required>
+                               </div>
                             </div>
                         </div>
 
@@ -115,6 +123,25 @@ if (isset($_POST['btnAdd'])) {
   window.history.replaceState( null, null, window.location.href );
 }
 
+</script>
+<script>
+    // Get the input element
+    var durationInput = document.getElementById('duration');
+
+    // Add an event listener for the input event
+    durationInput.addEventListener('input', function(event) {
+        // Get the current value of the input
+        var value = event.target.value;
+
+        // Check if the length of the value is 2
+        if (value.length === 2) {
+            // If so, add a colon after the second character
+            value = value + ':';
+        }
+
+        // Set the modified value back to the input
+        event.target.value = value;
+    });
 </script>
 
 <!--code for page clear-->

@@ -24,6 +24,8 @@
                                     
                                     <th  data-field="id" data-sortable="true">ID</th>
                                     <th data-field="url" data-sortable="true">URL</th>
+                                    <th data-field="duration" data-sortable="true">Duration</th>
+                                    <th data-field="status" data-sortable="true">Status</th>
                                     <th  data-field="operate" data-events="actionEvents">Action</th>
                                 </tr>
                             </thead>

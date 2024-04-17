@@ -1164,6 +1164,11 @@ if (isset($_GET['table']) && $_GET['table'] == 'video') {
         $operate .= ' <a class="text text-danger" href="delete-video.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
         $tempRow['id'] = $row['id'];
         $tempRow['url'] = $row['url'];
+        $tempRow['duration'] = $row['duration'];
+        if($row['status']==1)
+        $tempRow['status'] ="<p class='text text-success'>Active</p>";
+        elseif($row['status']==0)
+        $tempRow['status']="<p class='text text-primary'>Deactivate</p>";
         $tempRow['operate'] = $operate;
         $rows[] = $tempRow;
     }
