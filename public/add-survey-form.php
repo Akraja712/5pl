@@ -13,6 +13,7 @@ if (isset($_POST['btnAdd'])) {
         $option_1 = $db->escapeString(($_POST['option_1']));
         $option_2 = $db->escapeString(($_POST['option_2']));
         $option_3 = $db->escapeString(($_POST['option_3']));
+        $video_id = $db->escapeString(($_POST['video_id']));
         $error = array();
        
       
@@ -21,10 +22,10 @@ if (isset($_POST['btnAdd'])) {
         }
        
        
-       if (!empty($plan_id) && !empty($question)&& !empty($correct_option) && !empty($option_1) && !empty($option_2) && !empty($option_3)) 
+       if (!empty($plan_id) && !empty($question)&& !empty($correct_option) && !empty($option_1) && !empty($option_2) && !empty($option_3) && !empty($video_id)) 
        {
            
-            $sql_query = "INSERT INTO survey (plan_id,question,correct_option,option_1,option_2,option_3)VALUES('$plan_id','$question','$correct_option','$option_1','$option_2','$option_3')";
+            $sql_query = "INSERT INTO survey (plan_id,question,correct_option,option_1,option_2,option_3,video_id)VALUES('$plan_id','$question','$correct_option','$option_1','$option_2','$option_3','$video_id')";
             $db->sql($sql_query);
             $result = $db->getResult();
             if (!empty($result)) {
@@ -67,7 +68,7 @@ if (isset($_POST['btnAdd'])) {
                     <div class="box-body">
                        <div class="row">
                             <div class="form-group">
-                            <div class="col-md-4">
+                              <div class="col-md-6">
                                     <label for="exampleInputEmail1">Select Plan</label><i class="text-danger asterik">*</i><?php echo isset($error['plan_id']) ? $error['plan_id'] : ''; ?>
                                     <select id='plan_id' name="plan_id" class='form-control' required>
                                         <option value="">select</option>
@@ -78,6 +79,21 @@ if (isset($_POST['btnAdd'])) {
                                         foreach ($result as $value) {
                                         ?>
                                             <option value='<?= $value['id'] ?>'><?= $value['name'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            
+                              <div class="col-md-6">
+                                    <label for="exampleInputEmail1">Select Video</label><i class="text-danger asterik">*</i><?php echo isset($error['video_id']) ? $error['video_id'] : ''; ?>
+                                    <select id='video_id' name="video_id" class='form-control' required>
+                                        <option value="">select</option>
+                                        <?php
+                                        $sql = "SELECT id,url FROM `video`";
+                                        $db->sql($sql);
+                                        $result = $db->getResult();
+                                        foreach ($result as $value) {
+                                        ?>
+                                            <option value='<?= $value['id'] ?>'><?= $value['url'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>

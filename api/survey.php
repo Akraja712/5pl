@@ -23,9 +23,16 @@ if (empty($_POST['survey_id'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['video_id'])) {
+    $response['success'] = false;
+    $response['message'] = "Video ID is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 
 $user_id = $db->escapeString($_POST['user_id']);
 $survey_id = $db->escapeString($_POST['survey_id']);
+$video_id = $db->escapeString($_POST['video_id']);
 
 $sql = "SELECT * FROM users WHERE id = $user_id ";
 $db->sql($sql);
@@ -39,7 +46,7 @@ if (empty($user)) {
 }
 
 
-$sql = "SELECT * FROM survey WHERE id = $survey_id ";
+$sql = "SELECT * FROM survey WHERE id = $survey_id AND video_id = $video_id ";
 $db->sql($sql);
 $res= $db->getResult();
 $num = $db->numRows($res);

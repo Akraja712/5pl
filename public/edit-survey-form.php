@@ -21,9 +21,10 @@ if (isset($_POST['btnEdit'])) {
     $option_1 = $db->escapeString(($_POST['option_1']));
     $option_2 = $db->escapeString(($_POST['option_2']));
     $option_3 = $db->escapeString(($_POST['option_3']));
+	$video_id = $db->escapeString(($_POST['video_id']));
 	$error = array();
 
-		$sql_query = "UPDATE survey SET plan_id='$plan_id',question='$question',correct_option='$correct_option',option_1='$option_1',option_2='$option_2',option_3='$option_3' WHERE id =  $ID";
+		$sql_query = "UPDATE survey SET plan_id='$plan_id',question='$question',correct_option='$correct_option',option_1='$option_1',option_2='$option_2',option_3='$option_3',video_id = '$video_id' WHERE id =  $ID";
 		$db->sql($sql_query);
 		$update_result = $db->getResult();
 		if (!empty($update_result)) {
@@ -77,7 +78,7 @@ if (isset($_POST['btnCancel'])) { ?>
 					<div class="box-body">
 					   <div class="row">
 						    <div class="form-group">
-                            <div class="col-md-6">
+                                <div class="col-md-6">
                                     <label for="exampleInputEmail1">Select Plan</label> <i class="text-danger asterik">*</i>
                                     <select id='plan_id' name="plan_id" class='form-control'>
                                            <option value="">--Select--</option>
@@ -89,6 +90,22 @@ if (isset($_POST['btnCancel'])) { ?>
                                                 foreach ($result as $value) {
                                                 ?>
                                                     <option value='<?= $value['id'] ?>' <?= $value['id']==$res[0]['plan_id'] ? 'selected="selected"' : '';?>><?= $value['name'] ?></option>
+                                                    
+                                                <?php } ?>
+                                    </select>
+                                  </div>
+                                <div class="col-md-6">
+                                    <label for="exampleInputEmail1">Select Video</label> <i class="text-danger asterik">*</i>
+                                    <select id='video_id' name="video_id" class='form-control'>
+                                           <option value="">--Select--</option>
+                                                <?php
+                                                  $sql = "SELECT id,url FROM `video`";
+                                                $db->sql($sql);
+
+                                                $result = $db->getResult();
+                                                foreach ($result as $value) {
+                                                ?>
+                                                    <option value='<?= $value['id'] ?>' <?= $value['id']==$res[0]['video_id'] ? 'selected="selected"' : '';?>><?= $value['url'] ?></option>
                                                     
                                                 <?php } ?>
                                     </select>
