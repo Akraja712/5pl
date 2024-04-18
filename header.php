@@ -227,7 +227,7 @@ if ($_SESSION['role'] == 'admin') {
                 <?php
                 if ($_SESSION['role'] == 'admin') {
                      ?>
-                <li class="treeview">
+                <!--<li class="treeview">
                     <a href="home_slides.php">
                         <i class="fa fa-image"></i>
                         <span>Home Slide</span>
@@ -244,7 +244,7 @@ if ($_SESSION['role'] == 'admin') {
                         <i class="fa fa-image"></i>
                         <span>Payment Setting</span>
                     </a>
-                </li>
+                </li>-->
                 <li class="treeview">
                     <a href="otp.php">
                         <i class="fa fa-lock"></i>
@@ -257,7 +257,7 @@ if ($_SESSION['role'] == 'admin') {
                         <span>Hour Withdrawal Reports</span>
                     </a>
                 </li>
-                <li class="treeview">
+                <!--<li class="treeview">
                     <a href="markets.php">
                     <i class="fas fa-shopping-bag"></i>
                         <span>Markets</span>
@@ -268,7 +268,7 @@ if ($_SESSION['role'] == 'admin') {
                     <i class="fas fa-money"></i>
                         <span>Recharge Trans</span>
                     </a>
-                </li>
+                </li>-->
                 <li class="treeview">
                     <a href="survey.php">
                     <i class="fas fa-money"></i>
