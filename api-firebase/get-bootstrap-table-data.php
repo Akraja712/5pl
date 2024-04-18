@@ -1103,10 +1103,10 @@ if (isset($_GET['table']) && $_GET['table'] == 'survey') {
         $tempRow['id'] = $row['id'];
         $tempRow['name'] = $row['name'];
         $tempRow['question'] = $row['question'];
-        $tempRow['correct_option'] = $row['correct_option'];
+        $tempRow['correct_option'] = str_replace('_', ' ', $row['correct_option']);
         $tempRow['option_1'] = $row['option_1'];
-        $tempRow['option_2'] = $row['option_2'];
-        $tempRow['option_3'] = $row['option_3'];
+        $tempRow['option_2'] =$row['option_2'];
+        $tempRow['option_3'] =  $row['option_3'];
         $tempRow['operate'] = $operate;
         $rows[] = $tempRow;
     }
