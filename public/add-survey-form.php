@@ -111,9 +111,9 @@ if (isset($_POST['btnAdd'])) {
                                 <label for="exampleInputEmail1">Correct Option</label> <i class="text-danger asterik">*</i><?php echo isset($error['correct_option']) ? $error['correct_option'] : ''; ?>
                                     <select id='correct_option' name="correct_option" class='form-control'>
                                     <option value=''>--select--</option>
-                                    <option value='option 1'>Option 1</option>
-                                      <option value='option 2'>Option 2</option>
-                                      <option value='option 3'>Option 3</option>
+                                    <option value='option_1'>Option 1</option>
+                                      <option value='option_2'>Option 2</option>
+                                      <option value='option_3'>Option 3</option>
                                     </select>
                                 </div>
                             </div>

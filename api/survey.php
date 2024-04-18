@@ -52,16 +52,27 @@ $res= $db->getResult();
 $num = $db->numRows($res);
 
 if ($num >= 1){
+    foreach ($res as $row) {
+        $temp['id'] = $row['id'];
+        $temp['plan_id'] = $row['plan_id'];
+        $temp['question'] = $row['question'];
+        $temp['video_id'] = $row['video_id'];
+        $sql_options = "SELECT option_1, option_2, option_3 FROM survey WHERE id = $survey_id";
+        $db->sql($sql_options);
+        $options = $db->getResult();
+        $temp['correct_option'] = $options[0][$row['correct_option']];
+        $temp['option_1'] = $row['option_1'];
+        $temp['option_2'] = $row['option_2'];
+        $temp['option_3'] = $row['option_3'];
+        
+        $rows[] = $temp;
+    }
     $response['success'] = true;
     $response['message'] = "Survey Listed Successfully";
-    $response['data'] = $res;
+    $response['data'] = $rows;
     print_r(json_encode($response));
 }
-else{
-    $response['success'] = false;
-    $response['message'] = "Survey Not found";
-    print_r(json_encode($response));
 
-}
+
 
 

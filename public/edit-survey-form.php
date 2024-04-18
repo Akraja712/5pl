@@ -122,9 +122,9 @@ if (isset($_POST['btnCancel'])) { ?>
                                 <div class="col-md-6">
                                 <label for="exampleInputEmail1">Correct Option</label> <i class="text-danger asterik">*</i>
                                     <select id='correct_option' name="correct_option" class='form-control'>
-                                     <option value='option 1' <?php if ($res[0]['correct_option'] == 'option 1') echo 'selected'; ?>>Option 1</option>
-                                      <option value='option 2' <?php if ($res[0]['correct_option'] == 'option 2') echo 'selected'; ?>>Option 2</option>
-                                      <option value='option 3' <?php if ($res[0]['correct_option'] == 'option 3') echo 'selected'; ?>>Option 3</option>
+                                     <option value='option_1' <?php if ($res[0]['correct_option'] == 'option_1') echo 'selected'; ?>>Option 1</option>
+                                      <option value='option_2' <?php if ($res[0]['correct_option'] == 'option_2') echo 'selected'; ?>>Option 2</option>
+                                      <option value='option_3' <?php if ($res[0]['correct_option'] == 'option_3') echo 'selected'; ?>>Option 3</option>
                                     </select>
 								</div>
                             </div>
