@@ -45,7 +45,6 @@ if (empty($user)) {
     return false;
 }
 
-
 $sql = "SELECT * FROM survey WHERE id = $survey_id AND video_id = $video_id ";
 $db->sql($sql);
 $res= $db->getResult();
@@ -72,6 +71,12 @@ if ($num >= 1){
     $response['data'] = $rows;
     print_r(json_encode($response));
 }
+else {
+    $response['success'] = false;
+    $response['message'] = "Survey not found";
+    print_r(json_encode($response));
+}
+
 
 
 
