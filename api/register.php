@@ -24,12 +24,12 @@ if (empty($_POST['mobile'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['device_id'])) {
+/*if (empty($_POST['device_id'])) {
     $response['success'] = false;
     $response['message'] = "Device Id is Empty";
     print_r(json_encode($response));
     return false;
-}
+}*/
 if (empty($_POST['age'])) {
     $response['success'] = false;
     $response['message'] = "Age is Empty";
@@ -70,7 +70,7 @@ if (empty($_POST['password'])) {
 $name = $db->escapeString($_POST['name']);
 $mobile = $db->escapeString($_POST['mobile']);
 $referred_by = $db->escapeString($_POST['referred_by']);
-$device_id = $db->escapeString($_POST['device_id']);
+//$device_id = $db->escapeString($_POST['device_id']);
 $age = $db->escapeString($_POST['age']);
 $city = $db->escapeString($_POST['city']);
 $email = $db->escapeString($_POST['email']);
@@ -133,7 +133,7 @@ if ($num >= 1) {
     $refer_code = generateRandomString(6);
 
 
-    $sql = "INSERT INTO users (`mobile`,`name`,`referred_by`,`c_referred_by`,`d_referred_by`,`account_num`,`holder_name`,`bank`,`branch`,`ifsc`,`device_id`,`age`,`city`,`email`,`state`,`registered_datetime`,`refer_code`,`password`) VALUES ('$mobile','$name','$referred_by','$c_referred_by','$d_referred_by','','','','','','$device_id','$age','$city','$email','$state','$datetime','$refer_code','$password')";
+    $sql = "INSERT INTO users (`mobile`,`name`,`referred_by`,`c_referred_by`,`d_referred_by`,`account_num`,`holder_name`,`bank`,`branch`,`ifsc`,`device_id`,`age`,`city`,`email`,`state`,`registered_datetime`,`refer_code`,`password`) VALUES ('$mobile','$name','$referred_by','$c_referred_by','$d_referred_by','','','','','','','$age','$city','$email','$state','$datetime','$refer_code','$password')";
     $db->sql($sql);
 
     $sql_query = "UPDATE users SET team_size = team_size + 1 WHERE refer_code =  '$referred_by'";
