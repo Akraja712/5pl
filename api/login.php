@@ -85,7 +85,7 @@ if ($blocked == 1) {
 //$sql_query = "UPDATE users SET device_id = '$device_id' WHERE mobile ='$mobile' AND device_id = ''";
 //$db->sql($sql_query);
 
-$sql = "SELECT * FROM users WHERE mobile = '$mobile' AND device_id = '$device_id'";
+$sql = "SELECT * FROM users WHERE mobile = '$mobile'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
