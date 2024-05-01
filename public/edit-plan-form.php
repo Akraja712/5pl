@@ -17,8 +17,9 @@ if (isset($_POST['btnEdit'])) {
 
     $name = $db->escapeString(($_POST['name']));
     $description = $db->escapeString(($_POST['description']));
+	$demo_video = $db->escapeString(($_POST['demo_video']));
     
-		$sql_query = "UPDATE plan SET name='$name',description='$description' WHERE id =  $ID";
+		$sql_query = "UPDATE plan SET name='$name',description='$description',demo_video='$demo_video' WHERE id =  $ID";
 		$db->sql($sql_query);
 		$result = $db->getResult();             
 		if (!empty($result)) {
@@ -102,9 +103,13 @@ if (isset($_POST['btnCancel'])) { ?>
                     <input type="hidden" name="old_image" value="<?php echo isset($res[0]['image']) ? $res[0]['image'] : ''; ?>">
 				    	<div class="row">
 					  	  <div class="form-group">
-                               <div class="col-md-4">
+                               <div class="col-md-6">
 									<label for="exampleInputEmail1">Name</label><i class="text-danger asterik">*</i>
 									<input type="text" class="form-control" name="name" value="<?php echo $res[0]['name']; ?>">
+								</div>
+								<div class="col-md-6">
+									<label for="exampleInputEmail1">Demo Video</label><i class="text-danger asterik">*</i>
+									<input type="text" class="form-control" name="demo_video" value="<?php echo $res[0]['demo_video']; ?>">
 								</div>
                             </div>
                          </div>

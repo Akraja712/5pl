@@ -23,6 +23,7 @@
                                     <th  data-field="operate" data-events="actionEvents">Action</th>
                                     <th  data-field="id" data-sortable="true">ID</th>
                                     <th  data-field="name" data-sortable="true">Name</th>
+                                    <th  data-field="demo_video" data-sortable="true">Demo Video</th>
                                     <th data-field="image">Image</th>
                                     <th  data-field="description" data-sortable="true">Description</th>
                                 </tr>

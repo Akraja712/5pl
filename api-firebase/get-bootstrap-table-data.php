@@ -200,6 +200,7 @@ $db->connect();
                 $tempRow['id'] = $row['id'];
                 $tempRow['name'] = $row['name'];
                 $tempRow['description'] = $row['description'];
+                $tempRow['demo_video'] = $row['demo_video'];
                 if(!empty($row['image'])){
                     $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['image'] . "'><img src='" . $row['image'] . "' title='" . $row['image'] . "' height='50' /></a>";
         

@@ -9,6 +9,7 @@ if (isset($_POST['btnAdd'])) {
 
         $name = $db->escapeString(($_POST['name']));
         $description = $db->escapeString(($_POST['description']));
+        $demo_video = $db->escapeString(($_POST['demo_video']));
    
         $error = array();
        
@@ -17,6 +18,9 @@ if (isset($_POST['btnAdd'])) {
         }
         if (empty($description)) {
             $error['description'] = " <span class='label label-danger'>Required!</span>";
+        }
+        if (empty($demo_video)) {
+            $error['demo_video'] = " <span class='label label-danger'>Required!</span>";
         }
   
        
@@ -37,10 +41,10 @@ if (isset($_POST['btnAdd'])) {
         }
 
         $upload_image = 'upload/images/' . $filename;
-        $sql = "INSERT INTO plan (name,description,image) VALUES ('$name','$description','$upload_image')";
+        $sql = "INSERT INTO plan (name,description,image,demo_video) VALUES ('$name','$description','$upload_image','$demo_video')";
         $db->sql($sql);
     } else {
-            $sql_query = "INSERT INTO plan (name,description) VALUES ('$name','$description')";
+            $sql_query = "INSERT INTO plan (name,description,demo_video) VALUES ('$name','$description','$demo_video')";
             $db->sql($sql);
         }
             $result = $db->getResult();
@@ -84,9 +88,13 @@ if (isset($_POST['btnAdd'])) {
                     <div class="box-body">
                        <div class="row">
                             <div class="form-group">
-                                <div class='col-md-4'>
+                                <div class='col-md-6'>
                                     <label for="exampleInputtitle">Name</label> <i class="text-danger asterik">*</i>
                                     <input type="text" class="form-control" name="name" required>
+                                </div>
+                                <div class='col-md-6'>
+                                    <label for="exampleInputtitle">Demo Video</label> <i class="text-danger asterik">*</i>
+                                    <input type="text" class="form-control" name="demo_video" required>
                                 </div>
                             </div>
                         </div>
