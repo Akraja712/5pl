@@ -43,6 +43,7 @@ if ($num >= 1){
         $temp['name'] = $row['name'];
         $temp['description'] = $row['description'];
         $temp['image'] = DOMAIN_URL . $row['image'];
+        $temp['demo_video'] = $row['demo_video'];
         $rows[] = $temp;
     }
     $response['success'] = true;
