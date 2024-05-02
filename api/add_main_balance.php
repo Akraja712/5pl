@@ -47,7 +47,7 @@ if ($num == 1) {
     //$days_60_plan = $res[0]['days_60_plan'];
     $total_referrals = $res[0]['total_referrals'];
 
-    if($wallet_type == 'hiring_earnings'){
+    if($wallet_type == 'hiring_earings'){
         if ($hiring_earings < 100) {
             $response['success'] = false;
             $response['message'] = "Minimum 100 rs to add";
@@ -60,8 +60,6 @@ if ($num == 1) {
         $db->sql($sql);
     }
     if($wallet_type == 'orders_earnings'){
-
-
         if ($orders_earnings < 100) {
             $response['success'] = false;
             $response['message'] = "Minimum 100 rs to add";
