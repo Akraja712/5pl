@@ -38,13 +38,13 @@ $num = $db->numRows($res);
 
 
 if ($num == 1) {
-    $today_orders = $res[0]['today_orders'];
-    $status = $res[0]['status'];
+    //$today_orders = $res[0]['today_orders'];
+    //$status = $res[0]['status'];
     $hiring_earings = $res[0]['hiring_earings']; 
     $orders_earnings = $res[0]['orders_earnings'];
     $average_orders = $res[0]['average_orders'];
-    $student_plan = $res[0]['student_plan'];
-    $days_60_plan = $res[0]['days_60_plan'];
+    //$student_plan = $res[0]['student_plan'];
+    //$days_60_plan = $res[0]['days_60_plan'];
     $total_referrals = $res[0]['total_referrals'];
 
     if($wallet_type == 'hiring_earnings'){
