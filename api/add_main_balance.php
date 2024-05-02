@@ -68,7 +68,7 @@ if ($num == 1) {
             print_r(json_encode($response));
             return false;
         }
-        if($student_plan == 0){
+       /* if($student_plan == 0){
             $today = date("N");
             if($average_orders >= 400 && $average_orders < 500 && $today != 1){
                 $response['success'] = false;
@@ -107,7 +107,7 @@ if ($num == 1) {
                 return false;
     
             } 
-        }
+        }*/
         
         $sql = "INSERT INTO transactions (`user_id`,`type`,`datetime`,`amount`) VALUES ($user_id,'orders_earnings','$datetime',$orders_earnings)";
         $db->sql($sql);
