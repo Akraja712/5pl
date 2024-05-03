@@ -49,7 +49,7 @@ if ($num == 1) {
     if($wallet_type == 'earning_wallet'){ 
         if ($earning_wallet < 100) {
             $response['success'] = false;
-            $response['message'] = "Minimum 500 rs to add";
+            $response['message'] = "Minimum 100 rs to add";
             print_r(json_encode($response));
             return false;
         }
@@ -67,9 +67,9 @@ if ($num == 1) {
         $db->sql($sql);
     }
     if($wallet_type == 'bonus_wallet'){
-        if ($bonus_wallet < 50) {
+        if ($bonus_wallet < 100) {
             $response['success'] = false;
-            $response['message'] = "Minimum 50 rs to add";
+            $response['message'] = "Minimum 100 rs to add";
             print_r(json_encode($response));
             return false;
         }
