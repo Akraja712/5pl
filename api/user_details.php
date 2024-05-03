@@ -12,7 +12,6 @@ include_once('../includes/crud.php');
 $db = new Database();
 $db->connect();
 
-
 if (empty($_POST['user_id'])) {
     $response['success'] = false;
     $response['message'] = "User ID is Empty";
@@ -28,9 +27,16 @@ $res_user = $db->getResult();
 $num = $db->numRows($res_user);
 
 if ($num >= 1) {
-    
     $user_details = $res_user[0];
     $user_details['profile'] = DOMAIN_URL . $user_details['profile'];
+    
+    $sql_settings = "SELECT min_withdrawal FROM settings WHERE id = 1";
+    $db->sql($sql_settings);
+    $res_settings = $db->getResult();
+    $min_withdrawal = $res_settings[0]['min_withdrawal'];
+    
+    $user_details['min_withdrawal'] = $min_withdrawal;
+    
     $response['success'] = true;
     $response['message'] = "User Details Retrieved Successfully";
     $response['data'] = array($user_details);

@@ -15,13 +15,13 @@ $db->connect();
 
 if (empty($_POST['user_id'])) {
     $response['success'] = false;
-    $response['message'] = " User Id is Empty";
+    $response['message'] = "User Id is Empty";
     print_r(json_encode($response));
     return false;
 }
 if (empty($_POST['wallet_type'])) {
     $response['success'] = false;
-    $response['message'] = " Wallet Type is Empty";
+    $response['message'] = "Wallet Type is Empty";
     print_r(json_encode($response));
     return false;
 }
@@ -83,11 +83,17 @@ if ($num == 1) {
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $db->sql($sql);
     $res = $db->getResult();
+
+    $sql_settings = "SELECT min_withdrawal FROM settings WHERE id = 1";
+    $db->sql($sql_settings);
+    $res_settings = $db->getResult();
+    $min_withdrawal = $res_settings[0]['min_withdrawal'];
+
+    $res[0]['min_withdrawal'] = $min_withdrawal;
+
     $response['success'] = true;
     $response['message'] = "Added to Main Balance Successfully";
     $response['data'] = $res;
-
-
 
 }
 else{
