@@ -44,6 +44,8 @@ if ($num >= 1){
         $temp['description'] = $row['description'];
         $temp['image'] = DOMAIN_URL . $row['image'];
         $temp['demo_video'] = $row['demo_video'];
+        $temp['total_codes'] = $row['total_codes'];
+        $temp['per_code_cost'] = $row['per_code_cost'];
         $rows[] = $temp;
     }
     $response['success'] = true;
