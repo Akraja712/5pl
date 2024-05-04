@@ -74,7 +74,7 @@ $datetime = date('Y-m-d H:i:s');
         return false;
     }
 
-    $sql_insert_user_plan = "INSERT INTO user_plan (user_id,plan_id,joined_date) VALUES ('$user_id','$plan_id','$date')";
+    $sql_insert_user_plan = "INSERT INTO user_plan (user_id,plan_id,joined_date,claim) VALUES ('$user_id','$plan_id','$date',1)";
     $db->sql($sql_insert_user_plan);
 
     $response['success'] = true;
