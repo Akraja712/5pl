@@ -58,19 +58,22 @@ if ($num >= 1) {
     $response['message'] = "Plan not found";
     print_r(json_encode($response));
 }
-
 function strip_tags_except($string, $exceptions = array()) {
     foreach ($exceptions as $tag) {
         $string = str_replace("<$tag>", "#{$tag}#", $string);
         $string = str_replace("</$tag>", "#/{$tag}#", $string);
     }
-    // Remove \r\n characters
-    $string = str_replace(array("\r", "\n"), '', $string);
+    // Remove HTML tags and their attributes
+     // Remove \r\n characters
+     $string = str_replace(array("\r", "\n"), '', $string);
     $string = strip_tags($string);
+    // Decode HTML entities to symbols
+    $string = html_entity_decode($string);
     foreach ($exceptions as $tag) {
         $string = str_replace("#{$tag}#", "<$tag>", $string);
         $string = str_replace("#/{$tag}#", "</$tag>", $string);
     }
     return $string;
 }
+
 
