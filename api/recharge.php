@@ -89,6 +89,7 @@ if ($num == 1) {
         $upload_image= 'upload/images/' . $filename;
         $sql = "INSERT INTO recharge (`user_id`,`recharge_amount`,`image`,`status`,`datetime`) VALUES ('$user_id','$recharge_amount','$upload_image',0,'$datetime')";
         $db->sql($sql);
+
         $response["success"]   = true;
         $response["message"] = "Recharge Added Successfully";
     }
@@ -102,7 +103,6 @@ if ($num == 1) {
 else{
     $response['success'] = false;
     $response['message'] = "User Not Found";
-
 }
 print_r(json_encode($response));
 return false;

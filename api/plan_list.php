@@ -11,6 +11,7 @@ include_once('../includes/crud.php');
 
 $db = new Database();
 $db->connect();
+
 if (empty($_POST['user_id'])) {
     $response['success'] = false;
     $response['message'] = "User ID is Empty";
@@ -31,17 +32,17 @@ if (empty($user)) {
     return false;
 }
 
-
 $sql = "SELECT * FROM plan";
 $db->sql($sql);
-$res= $db->getResult();
+$res = $db->getResult();
 $num = $db->numRows($res);
 
-if ($num >= 1){
+if ($num >= 1) {
     foreach ($res as $row) {
         $temp['id'] = $row['id'];
         $temp['name'] = $row['name'];
-        $temp['description'] = $row['description'];
+        // Remove all HTML tags except for <br>
+        $temp['description'] = strip_tags_except($row['description'], array('br'));
         $temp['image'] = DOMAIN_URL . $row['image'];
         $temp['demo_video'] = $row['demo_video'];
         $temp['total_codes'] = $row['total_codes'];
@@ -52,12 +53,24 @@ if ($num >= 1){
     $response['message'] = "Plan Details Listed Successfully";
     $response['data'] = $rows;
     print_r(json_encode($response));
-}
-else{
+} else {
     $response['success'] = false;
-    $response['message'] = "plan Not found";
+    $response['message'] = "Plan not found";
     print_r(json_encode($response));
-
 }
 
+function strip_tags_except($string, $exceptions = array()) {
+    foreach ($exceptions as $tag) {
+        $string = str_replace("<$tag>", "#{$tag}#", $string);
+        $string = str_replace("</$tag>", "#/{$tag}#", $string);
+    }
+    // Remove \r\n characters
+    $string = str_replace(array("\r", "\n"), '', $string);
+    $string = strip_tags($string);
+    foreach ($exceptions as $tag) {
+        $string = str_replace("#{$tag}#", "<$tag>", $string);
+        $string = str_replace("#/{$tag}#", "</$tag>", $string);
+    }
+    return $string;
+}
 
