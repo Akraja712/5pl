@@ -47,7 +47,7 @@ if (empty($user)) {
     print_r(json_encode($response));
     return false;
 }
-
+$recharge = $user[0]['recharge'];
 
 $sql = "SELECT * FROM plan WHERE id = $plan_id ";
 $db->sql($sql);
@@ -60,6 +60,7 @@ if (empty($plan)) {
     return false;
 }
 
+$price = $plan[0]['price'];
 $datetime = date('Y-m-d H:i:s');
 
 
@@ -73,12 +74,20 @@ $datetime = date('Y-m-d H:i:s');
         print_r(json_encode($response));
         return false;
     }
+    if ($recharge >= $price) {
 
-    $sql_insert_user_plan = "INSERT INTO user_plan (user_id,plan_id,joined_date,claim) VALUES ('$user_id','$plan_id','$date',1)";
+    $sql_insert_user_plan = "INSERT INTO user_plan (user_id,plan_id,joined_date) VALUES ('$user_id','$plan_id','$date')";
     $db->sql($sql_insert_user_plan);
+
+    $sql_insert_transaction = "INSERT INTO transactions (user_id, amount, datetime, type) VALUES ('$user_id', '$price', '$datetime', 'start_production')";
+    $db->sql($sql_insert_transaction);
 
     $response['success'] = true;
     $response['message'] = "Plan started successfully";
-
+    }
+    else {
+        $response['success'] = false;
+        $response['message'] = "Insufficient balance to start this plan";
+    }
 print_r(json_encode($response));
 ?>

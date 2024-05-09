@@ -10,6 +10,9 @@ if (isset($_POST['btnAdd'])) {
         $name = $db->escapeString(($_POST['name']));
         $description = $db->escapeString(($_POST['description']));
         $demo_video = $db->escapeString(($_POST['demo_video']));
+        $daily_codes = $db->escapeString(($_POST['daily_codes']));
+        $per_code_cost = $db->escapeString(($_POST['per_code_cost']));
+        $price = $db->escapeString(($_POST['price']));
    
         $error = array();
        
@@ -21,6 +24,15 @@ if (isset($_POST['btnAdd'])) {
         }
         if (empty($demo_video)) {
             $error['demo_video'] = " <span class='label label-danger'>Required!</span>";
+        }
+        if (empty($daily_codes)) {
+            $error['daily_codes'] = " <span class='label label-danger'>Required!</span>";
+        }
+        if (empty($per_code_cost)) {
+            $error['per_code_cost'] = " <span class='label label-danger'>Required!</span>";
+        }
+        if (empty($price)) {
+            $error['price'] = " <span class='label label-danger'>Required!</span>";
         }
   
        
@@ -41,10 +53,10 @@ if (isset($_POST['btnAdd'])) {
         }
 
         $upload_image = 'upload/images/' . $filename;
-        $sql = "INSERT INTO plan (name,description,image,demo_video) VALUES ('$name','$description','$upload_image','$demo_video')";
+        $sql = "INSERT INTO plan (name,description,image,demo_video,daily_codes,per_code_cost,price) VALUES ('$name','$description','$upload_image','$demo_video','$daily_codes','$per_code_cost','$price')";
         $db->sql($sql);
     } else {
-            $sql_query = "INSERT INTO plan (name,description,demo_video) VALUES ('$name','$description','$demo_video')";
+            $sql_query = "INSERT INTO plan (name,description,demo_video,daily_codes,per_code_cost,price) VALUES ('$name','$description','$demo_video','$daily_codes','$per_code_cost','$price')";
             $db->sql($sql);
         }
             $result = $db->getResult();
@@ -88,24 +100,36 @@ if (isset($_POST['btnAdd'])) {
                     <div class="box-body">
                        <div class="row">
                             <div class="form-group">
-                                <div class='col-md-6'>
+                                <div class='col-md-4'>
                                     <label for="exampleInputtitle">Name</label> <i class="text-danger asterik">*</i>
                                     <input type="text" class="form-control" name="name" required>
                                 </div>
-                                <div class='col-md-6'>
+                                <div class='col-md-4'>
                                     <label for="exampleInputtitle">Demo Video</label> <i class="text-danger asterik">*</i>
                                     <input type="text" class="form-control" name="demo_video" required>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label for="exampleInputtitle">Price</label> <i class="text-danger asterik">*</i>
+                                    <input type="number" class="form-control" name="price" required>
                                 </div>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="form-group">
-                                 <div class="col-md-6">
+                                 <div class="col-md-4">
                                     <label for="exampleInputFile">Image</label> <i class="text-danger asterisk">*</i><?php echo isset($error['image']) ? $error['image'] : ''; ?>
                                     <input type="file" name="image" onchange="readURL(this);" accept="image/png, image/jpeg" id="image" required/><br>
                                     <img id="blah" src="#" alt="" style="display: none; max-height: 200px; max-width: 200px;" /> <!-- Adjust max-height and max-width as needed -->
                                  </div>
+                                 <div class='col-md-4'>
+                                    <label for="exampleInputtitle">Daily Codes</label> <i class="text-danger asterik">*</i>
+                                    <input type="number" class="form-control" name="daily_codes" required>
+                                </div>
+                                 <div class='col-md-4'>
+                                    <label for="exampleInputtitle">Per Code Cost</label> <i class="text-danger asterik">*</i>
+                                    <input type="number" class="form-control" name="per_code_cost" required>
+                                </div>
                             </div> 
                         </div> 
                         <br>

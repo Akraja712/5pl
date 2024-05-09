@@ -201,6 +201,9 @@ $db->connect();
                 $tempRow['name'] = $row['name'];
                 $tempRow['description'] = $row['description'];
                 $tempRow['demo_video'] = $row['demo_video'];
+                $tempRow['per_code_cost'] = $row['per_code_cost'];
+                $tempRow['daily_codes'] = $row['daily_codes'];
+                $tempRow['price'] = $row['price'];
                 if(!empty($row['image'])){
                     $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['image'] . "'><img src='" . $row['image'] . "' title='" . $row['image'] . "' height='50' /></a>";
         

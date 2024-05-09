@@ -45,8 +45,9 @@ if ($num >= 1) {
         $temp['description'] = strip_tags_except($row['description'], array('br'));
         $temp['image'] = DOMAIN_URL . $row['image'];
         $temp['demo_video'] = $row['demo_video'];
-        $temp['total_codes'] = $row['total_codes'];
+        $temp['daily_codes'] = $row['daily_codes'];
         $temp['per_code_cost'] = $row['per_code_cost'];
+        $temp['price'] = $row['price'];
         $rows[] = $temp;
     }
     $response['success'] = true;
