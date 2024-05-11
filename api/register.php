@@ -24,15 +24,25 @@ if (empty($_POST['mobile'])) {
     print_r(json_encode($response));
     return false;
 }
-// Remove any non-numeric characters from the mobile number
+/// Remove any non-numeric characters from the mobile number
 $mobileNumber = preg_replace('/[^0-9]/', '', $_POST['mobile']);
 
-if (strlen($mobileNumber) !== 10) {
+// Check if the mobile number starts with '0'
+if (substr($mobileNumber, 0, 1) === '0') {
     $response['success'] = false;
-    $response['message'] = "Mobile number should be exactly 10 digits,please remove if +91 is there";
+    $response['message'] = "Mobile number cannot start with '0'";
     print_r(json_encode($response));
     return false;
 }
+
+// Check if the length of the mobile number is exactly 10 digits
+if (strlen($mobileNumber) !== 10) {
+    $response['success'] = false;
+    $response['message'] = "Mobile number should be exactly 10 digits, please remove if +91 is there";
+    print_r(json_encode($response));
+    return false;
+}
+
 /*if (empty($_POST['device_id'])) {
     $response['success'] = false;
     $response['message'] = "Device Id is Empty";
