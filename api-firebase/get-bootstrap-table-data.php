@@ -395,9 +395,9 @@ if (isset($_GET['table']) && $_GET['table'] == 'user_plan') {
     $sort = 'id';
     $order = 'DESC';
 
-    if (isset($_GET['products']) && $_GET['products'] != '') {
-        $products = $db->escapeString($fn->xss_clean($_GET['products']));
-        $where .= " AND p.products = '$products'";
+    if (isset($_GET['name']) && $_GET['name'] != '') {
+        $name = $db->escapeString($fn->xss_clean($_GET['name']));
+        $where .= " AND p.name = '$name'";
     }
     if ((isset($_GET['joined_date']) && $_GET['joined_date'] != '')) {
         $joined_date = $db->escapeString($fn->xss_clean($_GET['joined_date']));
@@ -425,7 +425,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'user_plan') {
             $total = $row['total'];
         }
         
-        $sql = "SELECT l.id AS id, l.*, u.name AS user_name, u.mobile AS user_mobile, p.products AS plan_products, p.price AS plan_price, p.daily_quantity AS plan_daily_quantity, p.unit AS plan_unit, p.daily_income AS plan_daily_income, p.monthly_income AS plan_monthly_income, p.invite_bonus AS plan_invite_bonus FROM `user_plan` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
+        $sql = "SELECT l.id AS id, l.*, u.name AS user_name, u.mobile AS user_mobile, p.name AS plan_name, p.price AS plan_price, p.daily_codes AS plan_daily_codes, p.per_code_cost AS plan_per_code_cost  FROM `user_plan` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
         $db->sql($sql);
         $res = $db->getResult();
         
@@ -443,13 +443,10 @@ if (isset($_GET['table']) && $_GET['table'] == 'user_plan') {
         $tempRow['id'] = $row['id'];
         $tempRow['user_name'] = $row['user_name'];
         $tempRow['user_mobile'] = $row['user_mobile'];
-        $tempRow['plan_products'] = $row['plan_products'];
+        $tempRow['plan_name'] = $row['plan_name'];
         $tempRow['plan_price'] = $row['plan_price'];
-        $tempRow['plan_daily_quantity'] = $row['plan_daily_quantity'];
-        $tempRow['plan_unit'] = $row['plan_unit'];
-        $tempRow['plan_daily_income'] = $row['plan_daily_income'];
-        $tempRow['plan_monthly_income'] = $row['plan_monthly_income'];
-        $tempRow['plan_invite_bonus'] = $row['plan_invite_bonus'];
+        $tempRow['plan_daily_codes'] = $row['plan_daily_codes'];
+        $tempRow['plan_per_code_cost'] = $row['plan_per_code_cost'];
         $tempRow['income'] = $row['income'];
         $tempRow['joined_date'] = $row['joined_date'];
         $tempRow['operate'] = $operate;
