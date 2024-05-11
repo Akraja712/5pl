@@ -46,6 +46,7 @@ if ($num >= 1) {
         $temp['image'] = DOMAIN_URL . $row['image'];
         $temp['demo_video'] = $row['demo_video'];
         $temp['daily_codes'] = $row['daily_codes'];
+        $temp['daily_earnings'] = $row['daily_earnings'];
         $temp['per_code_cost'] = $row['per_code_cost'];
         $temp['price'] = $row['price'];
         $rows[] = $temp;

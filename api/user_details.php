@@ -37,6 +37,14 @@ if ($num >= 1) {
     
     $user_details['min_withdrawal'] = $min_withdrawal;
     
+    // Fetch default about_us text
+    $default_about_us = "SLVE Enterprises is a leading 5PL logistics company, specializing in efficient and reliable stock supply to retail stores. We manage end-to-end supply chains, ensuring seamless integration and optimization for our clients. With our expertise, your retail business can achieve timely deliveries and maintain a competitive edge.";
+    
+    // If 'about_us' field is empty, use the default text
+    if(empty($user_details['about_us'])) {
+        $user_details['about_us'] = $default_about_us;
+    }
+    
     $response['success'] = true;
     $response['message'] = "User Details Retrieved Successfully";
     $response['data'] = array($user_details);

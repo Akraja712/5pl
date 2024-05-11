@@ -203,6 +203,7 @@ $db->connect();
                 $tempRow['demo_video'] = $row['demo_video'];
                 $tempRow['per_code_cost'] = $row['per_code_cost'];
                 $tempRow['daily_codes'] = $row['daily_codes'];
+                $tempRow['daily_earnings'] = $row['daily_earnings'];
                 $tempRow['price'] = $row['price'];
                 if(!empty($row['image'])){
                     $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['image'] . "'><img src='" . $row['image'] . "' title='" . $row['image'] . "' height='50' /></a>";
@@ -425,7 +426,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'user_plan') {
             $total = $row['total'];
         }
         
-        $sql = "SELECT l.id AS id, l.*, u.name AS user_name, u.mobile AS user_mobile, p.name AS plan_name, p.price AS plan_price, p.daily_codes AS plan_daily_codes, p.per_code_cost AS plan_per_code_cost  FROM `user_plan` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
+        $sql = "SELECT l.id AS id, l.*, u.name AS user_name, u.mobile AS user_mobile, p.name AS plan_name, p.price AS plan_price, p.daily_codes AS plan_daily_codes, p.per_code_cost AS plan_per_code_cost, p.daily_earnings AS plan_daily_earnings  FROM `user_plan` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
         $db->sql($sql);
         $res = $db->getResult();
         
@@ -447,6 +448,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'user_plan') {
         $tempRow['plan_price'] = $row['plan_price'];
         $tempRow['plan_daily_codes'] = $row['plan_daily_codes'];
         $tempRow['plan_per_code_cost'] = $row['plan_per_code_cost'];
+        $tempRow['plan_daily_earnings'] = $row['plan_daily_earnings'];
         $tempRow['income'] = $row['income'];
         $tempRow['joined_date'] = $row['joined_date'];
         $tempRow['operate'] = $operate;

@@ -11,6 +11,7 @@ if (isset($_POST['btnAdd'])) {
         $description = $db->escapeString(($_POST['description']));
         $demo_video = $db->escapeString(($_POST['demo_video']));
         $daily_codes = $db->escapeString(($_POST['daily_codes']));
+        $daily_earnings = $db->escapeString(($_POST['daily_earnings']));
         $per_code_cost = $db->escapeString(($_POST['per_code_cost']));
         $price = $db->escapeString(($_POST['price']));
    
@@ -27,6 +28,9 @@ if (isset($_POST['btnAdd'])) {
         }
         if (empty($daily_codes)) {
             $error['daily_codes'] = " <span class='label label-danger'>Required!</span>";
+        }
+        if (empty($daily_earnings)) {
+            $error['daily_earnings'] = " <span class='label label-danger'>Required!</span>";
         }
         if (empty($per_code_cost)) {
             $error['per_code_cost'] = " <span class='label label-danger'>Required!</span>";
@@ -53,10 +57,10 @@ if (isset($_POST['btnAdd'])) {
         }
 
         $upload_image = 'upload/images/' . $filename;
-        $sql = "INSERT INTO plan (name,description,image,demo_video,daily_codes,per_code_cost,price) VALUES ('$name','$description','$upload_image','$demo_video','$daily_codes','$per_code_cost','$price')";
+        $sql = "INSERT INTO plan (name,description,image,demo_video,daily_codes,per_code_cost,price,daily_earnings) VALUES ('$name','$description','$upload_image','$demo_video','$daily_codes','$per_code_cost','$price','$daily_earnings')";
         $db->sql($sql);
     } else {
-            $sql_query = "INSERT INTO plan (name,description,demo_video,daily_codes,per_code_cost,price) VALUES ('$name','$description','$demo_video','$daily_codes','$per_code_cost','$price')";
+            $sql_query = "INSERT INTO plan (name,description,demo_video,daily_codes,per_code_cost,price,daily_earnings) VALUES ('$name','$description','$demo_video','$daily_codes','$per_code_cost','$price','$daily_earnings')";
             $db->sql($sql);
         }
             $result = $db->getResult();
@@ -100,17 +104,21 @@ if (isset($_POST['btnAdd'])) {
                     <div class="box-body">
                        <div class="row">
                             <div class="form-group">
-                                <div class='col-md-4'>
+                                <div class='col-md-3'>
                                     <label for="exampleInputtitle">Name</label> <i class="text-danger asterik">*</i>
                                     <input type="text" class="form-control" name="name" required>
                                 </div>
-                                <div class='col-md-4'>
+                                <div class='col-md-3'>
                                     <label for="exampleInputtitle">Demo Video</label> <i class="text-danger asterik">*</i>
                                     <input type="text" class="form-control" name="demo_video" required>
                                 </div>
-                                <div class='col-md-4'>
+                                <div class='col-md-3'>
                                     <label for="exampleInputtitle">Price</label> <i class="text-danger asterik">*</i>
                                     <input type="number" class="form-control" name="price" required>
+                                </div>
+                                <div class='col-md-3'>
+                                    <label for="exampleInputtitle">Daily Earnings</label> <i class="text-danger asterik">*</i>
+                                    <input type="number" class="form-control" name="daily_earnings" required>
                                 </div>
                             </div>
                         </div>
