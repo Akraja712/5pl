@@ -27,6 +27,7 @@ $plan_names_res = $db->getResult();
 $plan_names = array_column($plan_names_res, 'name');
 
 $sql = "SELECT users.*, 
+               DATE(users.registered_datetime) AS registered_datetime,
                GROUP_CONCAT(plan.name) AS plan_names
         FROM users 
         LEFT JOIN user_plan ON users.id = user_plan.user_id
@@ -51,19 +52,26 @@ if ($num >= 1) {
         }
         
         $res[$key]['plans'] = $plans;
+        // Masking mobile number
+        $res[$key]['mobile'] = maskMobileNumber($user['mobile']);
+    }
+    
+    // Hide the plan_names field
+    foreach ($res as &$data) {
+        unset($data['plan_names']);
     }
     
     $response['data'] = $res;
-
-    // Hide the plan_names field
-    foreach ($response['data'] as &$data) {
-        unset($data['plan_names']);
-    }
 
     print_r(json_encode($response));
 } else {
     $response['success'] = false;
     $response['message'] = "No Users found who were referred by the user with the specified user_id";
     print_r(json_encode($response));
+}
+
+function maskMobileNumber($mobile) {
+    // Replace all but the first two and last two characters with *
+    return substr($mobile, 0, 2) . str_repeat('*', strlen($mobile) - 4) . substr($mobile, -2);
 }
 ?>
