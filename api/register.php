@@ -73,25 +73,35 @@ if (empty($_POST['state'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['referred_by'])) {
-    $response['success'] = false;
-    $response['message'] = "Refer code is empty";
-    print_r(json_encode($response));
-    return false;
-}
 
 
 $name = $db->escapeString($_POST['name']);
 $mobile = $db->escapeString($_POST['mobile']);
-$referred_by = $db->escapeString($_POST['referred_by']);
+//$referred_by = (isset($_POST['referred_by']) && !empty($_POST['referred_by'])) ? $db->escapeString($_POST['referred_by']) : "";
 //$device_id = $db->escapeString($_POST['device_id']);
 $age = $db->escapeString($_POST['age']);
 $city = $db->escapeString($_POST['city']);
 $email = $db->escapeString($_POST['email']);
 $state = $db->escapeString($_POST['state']);
-
+$referred_by = '';
 $c_referred_by = '';
 $d_referred_by = '';
+
+// Check for the validity of referred_by only if it's provided
+if (!empty($_POST['referred_by'])) {
+    $referred_by = $db->escapeString($_POST['referred_by']);
+    $sql = "SELECT id FROM users WHERE refer_code='$referred_by'";
+    $db->sql($sql);
+    $res = $db->getResult();
+    $num = $db->numRows($res);
+    if ($num == 0) {
+        $response['success'] = false;
+        $response['message'] ="Invalid Referred By";
+        print_r(json_encode($response));
+        return false;
+    }
+}
+
 $datetime = date('Y-m-d H:i:s');
 $sql = "SELECT * FROM users WHERE mobile='$mobile'";
 $db->sql($sql);
@@ -103,7 +113,7 @@ if ($num >= 1) {
     print_r(json_encode($response));
     return false;
 } else {
-
+  if (!empty($_POST['referred_by'])) {
     $sql = "SELECT id,referred_by FROM users WHERE refer_code = '$referred_by' AND refer_code != ''";
     $db->sql($sql);
     $refres = $db->getResult();
@@ -130,7 +140,7 @@ if ($num >= 1) {
                 $d_referred_by = $ref3;
             }
         }
-
+    }
     }
     function generateRandomString($length) {
         // Define an array containing digits and alphabets
