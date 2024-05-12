@@ -44,7 +44,21 @@ if ($num >= 1) {
     if(empty($user_details['about_us'])) {
         $user_details['about_us'] = $default_about_us;
     }
+
+    // Fetch associated plans for the user
+    $sql_plans = "SELECT plan.name FROM user_plan
+                  LEFT JOIN plan ON user_plan.plan_id = plan.id
+                  WHERE user_plan.user_id = $user_id";
+    $db->sql($sql_plans);
+    $res_plans = $db->getResult();
     
+    $user_plans = array();
+    foreach ($res_plans as $plan) {
+        $user_plans[] = $plan['name'];
+    }
+    $user_details['plan_activated'] = $user_plans;
+    
+
     $response['success'] = true;
     $response['message'] = "User Details Retrieved Successfully";
     $response['data'] = array($user_details);

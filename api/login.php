@@ -25,7 +25,7 @@ if (empty($_POST['device_id'])) {
 }
 $mobile = $db->escapeString($_POST['mobile']);
 $device_id = $db->escapeString($_POST['device_id']);
-$platform_type = (isset($_POST['platform_type']) && !empty($_POST['platform_type'])) ? $db->escapeString($_POST['platform_type']) : "app";
+//$platform_type = (isset($_POST['platform_type']) && !empty($_POST['platform_type'])) ? $db->escapeString($_POST['platform_type']) : "app";
 
 $sql = "SELECT * FROM users WHERE mobile = '$mobile'";
 $db->sql($sql);
@@ -33,13 +33,7 @@ $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1){
 
-
-    $status = $res[0]['status'];
-    if ($status == 1 || $status == 0) {
         $sql_query = "UPDATE users SET device_id = '$device_id' WHERE mobile ='$mobile' AND device_id = ''";
-        $db->sql($sql_query);
-
-        $sql_query = "UPDATE users SET platform_type = '$platform_type' WHERE mobile ='$mobile'";
         $db->sql($sql_query);
 
         //$sql = "SELECT * FROM users WHERE mobile = '$mobile' AND device_id = '$device_id'";
@@ -65,9 +59,6 @@ if ($num == 1){
         }
     }
             
-
-
-}
 else{
     $response['success'] = true;
     $response['registered'] = false;
