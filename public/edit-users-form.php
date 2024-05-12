@@ -43,7 +43,7 @@ if (isset($_POST['btnEdit'])) {
     $team_income= $db->escapeString($_POST['team_income']);
     $registered_datetime= $db->escapeString($_POST['registered_datetime']);
     $blocked = $db->escapeString($_POST['blocked']);
-    $password= $db->escapeString($_POST['password']);
+    //$password= $db->escapeString($_POST['password']);
     $latitude= $db->escapeString($_POST['latitude']);
     $longitude = $db->escapeString($_POST['longitude']);
 
@@ -66,7 +66,7 @@ if (isset($_POST['btnEdit'])) {
     }
 
     
-            $sql_query = "UPDATE users SET name='$name',mobile = '$mobile',email='$email',age='$age',city='$city',referred_by='$referred_by',refer_code='$refer_code',holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', account_num='$account_num',withdrawal_status = '$withdrawal_status',recharge  = '$recharge ',balance = '$balance',today_income = '$today_income',device_id  = '$device_id',total_income  = '$total_income',state  = '$state',total_recharge  = '$total_recharge',team_size  = '$team_size',valid_team  = '$valid_team',total_assets  = '$total_assets',total_withdrawal  = '$total_withdrawal',team_income  = '$team_income',registered_datetime  = '$registered_datetime',blocked = '$blocked',password = '$password',latitude = '$latitude',longitude = '$longitude' WHERE id = $ID";
+            $sql_query = "UPDATE users SET name='$name',mobile = '$mobile',email='$email',age='$age',city='$city',referred_by='$referred_by',refer_code='$refer_code',holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', account_num='$account_num',withdrawal_status = '$withdrawal_status',recharge  = '$recharge ',balance = '$balance',today_income = '$today_income',device_id  = '$device_id',total_income  = '$total_income',state  = '$state',total_recharge  = '$total_recharge',team_size  = '$team_size',valid_team  = '$valid_team',total_assets  = '$total_assets',total_withdrawal  = '$total_withdrawal',team_income  = '$team_income',registered_datetime  = '$registered_datetime',blocked = '$blocked',latitude = '$latitude',longitude = '$longitude' WHERE id = $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -172,10 +172,6 @@ if (isset($_POST['btnCancel'])) { ?>
                              <br>
                           <div class="row">
                               <div class="form-group">
-                              <div class="col-md-3">
-                                    <label for="exampleInputEmail1">Password</label> <i class="text-danger asterik">*</i><?php echo isset($error['password']) ? $error['password'] : ''; ?>
-                                    <input type="text" class="form-control" name="password" value="<?php echo $res[0]['password']; ?>">
-                                </div>
                                 <div class="col-md-3">
                                     <label for="exampleInputEmail1">Latitude</label> <i class="text-danger asterik">*</i><?php echo isset($error['latitude']) ? $error['latitude'] : ''; ?>
                                     <input type="text" class="form-control" name="latitude" value="<?php echo $res[0]['latitude']; ?>">

@@ -79,12 +79,7 @@ if (empty($_POST['referred_by'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['password'])) {
-    $response['success'] = false;
-    $response['message'] = "Password is empty";
-    print_r(json_encode($response));
-    return false;
-}
+
 
 $name = $db->escapeString($_POST['name']);
 $mobile = $db->escapeString($_POST['mobile']);
@@ -94,7 +89,7 @@ $age = $db->escapeString($_POST['age']);
 $city = $db->escapeString($_POST['city']);
 $email = $db->escapeString($_POST['email']);
 $state = $db->escapeString($_POST['state']);
-$password = $db->escapeString($_POST['password']);
+
 $c_referred_by = '';
 $d_referred_by = '';
 $datetime = date('Y-m-d H:i:s');
@@ -152,7 +147,7 @@ if ($num >= 1) {
     $refer_code = generateRandomString(6);
 
 
-    $sql = "INSERT INTO users (`mobile`,`name`,`referred_by`,`c_referred_by`,`d_referred_by`,`account_num`,`holder_name`,`bank`,`branch`,`ifsc`,`device_id`,`age`,`city`,`email`,`state`,`registered_datetime`,`refer_code`,`password`) VALUES ('$mobile','$name','$referred_by','$c_referred_by','$d_referred_by','','','','','','','$age','$city','$email','$state','$datetime','$refer_code','$password')";
+    $sql = "INSERT INTO users (`mobile`,`name`,`referred_by`,`c_referred_by`,`d_referred_by`,`account_num`,`holder_name`,`bank`,`branch`,`ifsc`,`device_id`,`age`,`city`,`email`,`state`,`registered_datetime`,`refer_code`) VALUES ('$mobile','$name','$referred_by','$c_referred_by','$d_referred_by','','','','','','','$age','$city','$email','$state','$datetime','$refer_code')";
     $db->sql($sql);
 
     $sql_query = "UPDATE users SET team_size = team_size + 1 WHERE refer_code =  '$referred_by'";

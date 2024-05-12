@@ -32,16 +32,16 @@ if (empty($_POST['mobile'])) {
 //     print_r(json_encode($response));
 //     return false;
 // }
-if (empty($_POST['password'])) {
-    $response['success'] = false;
-    $response['message'] = "Password is empty";
-    print_r(json_encode($response));
-    return false;
-}
+//if (empty($_POST['password'])) {
+ ///   $response['success'] = false;
+ //   $response['message'] = "Password is empty";
+ //   print_r(json_encode($response));
+  //  return false;
+//}
 //$device_id = $db->escapeString($_POST['device_id']);
 $mobile = $db->escapeString($_POST['mobile']);
 //$otp = $db->escapeString($_POST['otp']);
-$password = $db->escapeString($_POST['password']);
+//$password = $db->escapeString($_POST['password']);
 
 
 // $sql = "SELECT * FROM otp WHERE mobile = '$mobile' AND otp = '$otp'";
@@ -62,15 +62,6 @@ $user = $db->getResult();
 if (empty($user)) {
     $response['success'] = false;
     $response['message'] = "Your Mobile Number is not Registered";
-    print_r(json_encode($response));
-    return false;
-}
-$sql = "SELECT * FROM users WHERE mobile = '$mobile' AND password = '$password'";
-$db->sql($sql);
-$user = $db->getResult();
-if (empty($user)) {
-    $response['success'] = false;
-    $response['message'] = "Your Password is incorrect";
     print_r(json_encode($response));
     return false;
 }
