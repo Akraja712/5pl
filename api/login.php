@@ -11,81 +11,68 @@ include_once('../includes/crud.php');
 
 $db = new Database();
 $db->connect();
-
-$response = array();
-
 if (empty($_POST['mobile'])) {
     $response['success'] = false;
     $response['message'] = "Mobile is Empty";
     print_r(json_encode($response));
     return false;
 }
-/*if (empty($_POST['device_id'])) {
+if (empty($_POST['device_id'])) {
     $response['success'] = false;
     $response['message'] = "Device Id is Empty";
     print_r(json_encode($response));
     return false;
-}*/
-// if (empty($_POST['otp'])) {
-//     $response['success'] = false;
-//     $response['message'] = "Otp is Empty";
-//     print_r(json_encode($response));
-//     return false;
-// }
-//if (empty($_POST['password'])) {
- ///   $response['success'] = false;
- //   $response['message'] = "Password is empty";
- //   print_r(json_encode($response));
-  //  return false;
-//}
-//$device_id = $db->escapeString($_POST['device_id']);
+}
 $mobile = $db->escapeString($_POST['mobile']);
-//$otp = $db->escapeString($_POST['otp']);
-//$password = $db->escapeString($_POST['password']);
-
-
-// $sql = "SELECT * FROM otp WHERE mobile = '$mobile' AND otp = '$otp'";
-// $db->sql($sql);
-// $user = $db->getResult();
-
-// if (empty($user)) {
-//     $response['success'] = false;
-//     $response['message'] = "Invalid Otp";
-//     print_r(json_encode($response));
-//     return false;
-// }
-
-$sql = "SELECT * FROM users WHERE mobile = '$mobile'";
-$db->sql($sql);
-$user = $db->getResult();
-
-if (empty($user)) {
-    $response['success'] = false;
-    $response['message'] = "Your Mobile Number is not Registered";
-    print_r(json_encode($response));
-    return false;
-}
-$blocked = $user[0]['blocked'];
-
-if ($blocked == 1) {
-    $response['success'] = false;
-    $response['message'] = "Your Account is Blocked";
-    print_r(json_encode($response));
-    return false;
-}
-//$sql_query = "UPDATE users SET device_id = '$device_id' WHERE mobile ='$mobile' AND device_id = ''";
-//$db->sql($sql_query);
+$device_id = $db->escapeString($_POST['device_id']);
+$platform_type = (isset($_POST['platform_type']) && !empty($_POST['platform_type'])) ? $db->escapeString($_POST['platform_type']) : "app";
 
 $sql = "SELECT * FROM users WHERE mobile = '$mobile'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
+if ($num == 1){
 
-if ($num == 1) {     
+
+    $status = $res[0]['status'];
+    if ($status == 1 || $status == 0) {
+        $sql_query = "UPDATE users SET device_id = '$device_id' WHERE mobile ='$mobile' AND device_id = ''";
+        $db->sql($sql_query);
+
+        $sql_query = "UPDATE users SET platform_type = '$platform_type' WHERE mobile ='$mobile'";
+        $db->sql($sql_query);
+
+        //$sql = "SELECT * FROM users WHERE mobile = '$mobile' AND device_id = '$device_id'";
+        $sql = "SELECT * FROM users WHERE mobile = '$mobile'";
+        $db->sql($sql);
+        $res = $db->getResult();
+        $num = $db->numRows($res);
+        if ($num == 1) {
+            $response['success'] = true;
+            $response['registered'] = true;
+            $response['message'] = "Logged In Successfully";
+            $response['data'] = $res;
+            print_r(json_encode($response));
+        } else {
+            $sql = "INSERT INTO devices (`mobile`,`device_id`) VALUES ('$mobile','$device_id')";
+            $db->sql($sql);
+           
+            $response['success'] = false;
+            $response['registered'] = false;
+            $response['message'] = "Please Login With your Device";
+            print_r(json_encode($response));
+            return false;
+        }
+    }
+            
+
+
+}
+else{
     $response['success'] = true;
-    $response['registered'] = true;
-    $response['message'] = "Logged In Successfully";
-    $response['data'] = $res;
-    echo json_encode($response);
-} 
-?>
+    $response['registered'] = false;
+    $response['message'] = "User Not Logged In";
+    print_r(json_encode($response));
+    return false;
+}
+
