@@ -113,60 +113,60 @@ if ($num >= 1) {
     print_r(json_encode($response));
     return false;
 } else {
-  if (!empty($_POST['referred_by'])) {
-    $sql = "SELECT id,referred_by FROM users WHERE refer_code = '$referred_by' AND refer_code != ''";
-    $db->sql($sql);
-    $refres = $db->getResult();
-    $num = $db->numRows($refres);
-    if ($num == 0) {
-        $response['success'] = false;
-        $response['message'] = "Invalid Refer Code";
-        print_r(json_encode($response));
-        return false;
-    }else{
-        $ref2 = $refres[0]['referred_by'];
-        $sql = "SELECT id,referred_by FROM users WHERE refer_code = '$ref2' AND refer_code != ''";
+    if (!empty($_POST['referred_by'])) {
+        $sql = "SELECT id,referred_by FROM users WHERE refer_code = '$referred_by' AND refer_code != ''";
         $db->sql($sql);
-        $refres2 = $db->getResult();
-        $num = $db->numRows($refres2);
-        if ($num == 1) {
-            $c_referred_by = $ref2;
-            $ref3 = $refres2[0]['referred_by'];
-            $sql = "SELECT id,referred_by FROM users WHERE refer_code = '$ref3' AND refer_code != ''";
+        $refres = $db->getResult();
+        $num = $db->numRows($refres);
+        if ($num == 0) {
+            $response['success'] = false;
+            $response['message'] = "Invalid Refer Code";
+            print_r(json_encode($response));
+            return false;
+        } else {
+            $ref2 = $refres[0]['referred_by'];
+            $sql = "SELECT id,referred_by FROM users WHERE refer_code = '$ref2' AND refer_code != ''";
             $db->sql($sql);
-            $refres3 = $db->getResult();
-            $num = $db->numRows($refres3);
+            $refres2 = $db->getResult();
+            $num = $db->numRows($refres2);
             if ($num == 1) {
-                $d_referred_by = $ref3;
+                $c_referred_by = $ref2;
+                $ref3 = $refres2[0]['referred_by'];
+                $sql = "SELECT id,referred_by FROM users WHERE refer_code = '$ref3' AND refer_code != ''";
+                $db->sql($sql);
+                $refres3 = $db->getResult();
+                $num = $db->numRows($refres3);
+                if ($num == 1) {
+                    $d_referred_by = $ref3;
+                }
             }
         }
     }
-    }
-    function generateRandomString($length) {
-        // Define an array containing digits and alphabets
-        $characters = array_merge(range('A', 'Z'), range('a', 'z'), range(0, 9));
     
-        // Shuffle the array to make the selection random
-        shuffle($characters);
+    // Generating refer code based on user ID
+    $sql = "INSERT INTO users (`mobile`,`name`,`referred_by`,`c_referred_by`,`d_referred_by`,`age`,`city`,`email`,`state`,`registered_datetime`) VALUES ('$mobile','$name','$referred_by','$c_referred_by','$d_referred_by','$age','$city','$email','$state','$datetime')";
+    $db->sql($sql);
     
-        // Select random characters from the shuffled array
-        $random_string = implode('', array_slice($characters, 0, $length));
+    // Get the ID of the inserted user
+    $sql = "SELECT id FROM users WHERE mobile = '$mobile'";
+    $db->sql($sql);
+    $res = $db->getResult();
+    $userId = $res[0]['id'];
     
-        return $random_string;
-    }
-    $refer_code = generateRandomString(6);
-
-
-    $sql = "INSERT INTO users (`mobile`,`name`,`referred_by`,`c_referred_by`,`d_referred_by`,`account_num`,`holder_name`,`bank`,`branch`,`ifsc`,`device_id`,`age`,`city`,`email`,`state`,`registered_datetime`,`refer_code`) VALUES ('$mobile','$name','$referred_by','$c_referred_by','$d_referred_by','','','','','','','$age','$city','$email','$state','$datetime','$refer_code')";
+    // Generate refer code based on user ID
+    $refer_code = 'PL' . str_pad($userId, 2, '0', STR_PAD_LEFT);
+    
+    // Update the refer code for the user
+    $sql = "UPDATE users SET refer_code = '$refer_code' WHERE id = '$userId'";
     $db->sql($sql);
 
-    $sql_query = "UPDATE users SET team_size = team_size + 1 WHERE refer_code =  '$referred_by'";
-    $db->sql($sql_query);
-    
+    // Update team size for the referring user
+    if (!empty($referred_by)) {
+        $sql_query = "UPDATE users SET team_size = team_size + 1 WHERE refer_code =  '$referred_by'";
+        $db->sql($sql_query);
+    }
 
-    
-
-
+    // Retrieve user details with the generated refer code
     $sql = "SELECT * FROM users WHERE mobile = '$mobile'";
     $db->sql($sql);
     $res = $db->getResult();
