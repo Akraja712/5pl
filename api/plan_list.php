@@ -49,6 +49,13 @@ if ($num >= 1) {
         $temp['daily_earnings'] = $row['daily_earnings'];
         $temp['per_code_cost'] = $row['per_code_cost'];
         $temp['price'] = $row['price'];
+        
+        $plan_id = $row['id'];
+        $sql_check_plan = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = $plan_id";
+        $db->sql($sql_check_plan);
+        $plan_exists = $db->numRows() > 0;
+        $temp['status'] = $plan_exists ? 1 : 0;
+        
         $rows[] = $temp;
     }
     $response['success'] = true;
@@ -60,14 +67,15 @@ if ($num >= 1) {
     $response['message'] = "Plan not found";
     print_r(json_encode($response));
 }
+
 function strip_tags_except($string, $exceptions = array()) {
     foreach ($exceptions as $tag) {
         $string = str_replace("<$tag>", "#{$tag}#", $string);
         $string = str_replace("</$tag>", "#/{$tag}#", $string);
     }
     // Remove HTML tags and their attributes
-     // Remove \r\n characters
-     $string = str_replace(array("\r", "\n"), '', $string);
+    // Remove \r\n characters
+    $string = str_replace(array("\r", "\n"), '', $string);
     $string = strip_tags($string);
     // Decode HTML entities to symbols
     $string = html_entity_decode($string);
@@ -77,5 +85,4 @@ function strip_tags_except($string, $exceptions = array()) {
     }
     return $string;
 }
-
-
+?>
