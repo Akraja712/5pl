@@ -83,7 +83,8 @@ $age = $db->escapeString($_POST['age']);
 $city = $db->escapeString($_POST['city']);
 $email = $db->escapeString($_POST['email']);
 $state = $db->escapeString($_POST['state']);
-$referred_by = '';
+// Set default referred_by value to '5PL' if not provided
+$referred_by = isset($_POST['referred_by']) && !empty($_POST['referred_by']) ? $db->escapeString($_POST['referred_by']) : '5PL';
 $c_referred_by = '';
 $d_referred_by = '';
 
@@ -160,13 +161,6 @@ if ($num >= 1) {
     $sql = "UPDATE users SET refer_code = '$refer_code' WHERE id = '$userId'";
     $db->sql($sql);
 
-    // Update team size for the referring user
-    if (!empty($referred_by)) {
-        $sql_query = "UPDATE users SET team_size = team_size + 1 WHERE refer_code =  '$referred_by'";
-        $db->sql($sql_query);
-    }
-
-    // Retrieve user details with the generated refer code
     $sql = "SELECT * FROM users WHERE mobile = '$mobile'";
     $db->sql($sql);
     $res = $db->getResult();
