@@ -40,9 +40,13 @@ if ($num >= 1) {
     // Fetch default about_us text
     $default_about_us = "SLVE Enterprises is a leading 5PL logistics company, specializing in efficient and reliable stock supply to retail stores. We manage end-to-end supply chains, ensuring seamless integration and optimization for our clients. With our expertise, your retail business can achieve timely deliveries and maintain a competitive edge.";
 
+    $default_recharge_url = "https://slveenterprises.org/product/30052663/Penta-Logistics---Retail-Courses?vid=5543940";
     // If 'about_us' field is empty, use the default text
     if (empty($user_details['about_us'])) {
         $user_details['about_us'] = $default_about_us;
+    }
+    if (empty($user_details['recharge_url'])) {
+        $user_details['recharge_url'] = $default_recharge_url;
     }
 
     // Fetch associated plans for the user
